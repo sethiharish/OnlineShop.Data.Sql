@@ -2,6 +2,16 @@
 
   <PropertyGroup>
     <TargetFramework>netcoreapp3.1</TargetFramework>
+
+    <PackageId>OnlineShop.Data.Sql</PackageId>
+    <Version>1.0.0</Version>
+    <Title>OnlineShop Data Sql</Title>
+    <Authors>Harish Sethi</Authors>
+    <Company>JMD</Company>
+    <PackageDescription>This package contains the data services for accessing OnlineShop data stored in MS Sql Server</PackageDescription>
+    <PackageTags>OnlineShop Data Services (Sql)</PackageTags>
+    <RepositoryUrl>https://github.com/sethiharish/OnlineShop.Data.Sql</RepositoryUrl>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
   </PropertyGroup>
 
 </Project>
