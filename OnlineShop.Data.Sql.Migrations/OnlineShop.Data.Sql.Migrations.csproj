@@ -4,7 +4,7 @@
     <TargetFramework>netcoreapp3.1</TargetFramework>
   </PropertyGroup>
 
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
+  <PropertyGroup>
     <OutputPath>..\OnlineShop.Data.Sql\bin\$(Configuration)\</OutputPath>
   </PropertyGroup>
 
