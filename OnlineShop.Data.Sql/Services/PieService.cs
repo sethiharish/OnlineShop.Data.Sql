@@ -1,6 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using OnlineShop.Data.Services;
 using OnlineShop.Entities;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -24,6 +25,13 @@ namespace OnlineShop.Data.Sql.Services
         public async Task<IEnumerable<Pie>> GetPiesAsync()
         {
             return await context.Pie.Include(p => p.Category).ToListAsync();
+        }
+
+        public async Task<IEnumerable<Pie>> GetPiesByCategoryAsync(string category)
+        {
+            return await context.Pie.Where(p => 
+                                        p.Category.Name.Equals(category, StringComparison.InvariantCultureIgnoreCase))
+                                    .Include(p => p.Category).ToListAsync();
         }
 
         public async Task<IEnumerable<Pie>> GetPiesOfTheWeekAsync()

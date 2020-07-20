@@ -1,5 +1,6 @@
 ﻿using OnlineShop.Data.Sql.Services;
 using OnlineShop.Entities;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -18,7 +19,7 @@ namespace OnlineShop.Data.Sql.Tests.Services
             Category categoryFruitPies = new Category { Id = 1, Name = "Fruit pies", Description = "Fruit pies" };
             Category categoryCheeseCakes = new Category { Id = 2, Name = "Cheese cakes", Description = "Cheese cakes" };
             Category categorySeasonalPies = new Category { Id = 3, Name = "Seasonal pies", Description = "Seasonal pies" };
-
+            
             string longDescription = "Icing carrot cake jelly-o cheesecake. Sweet roll marzipan marshmallow toffee brownie brownie candy tootsie roll. Chocolate cake gingerbread tootsie roll oat cake pie chocolate bar cookie dragée brownie. Lollipop cotton candy cake bear claw oat cake. Dragée candy canes dessert tart. Marzipan dragée gummies lollipop jujubes chocolate bar candy canes. Icing gingerbread chupa chups cotton candy cookie sweet icing bonbon gummies. Gummies lollipop brownie biscuit danish chocolate cake. Danish powder cookie macaroon chocolate donut tart. Carrot cake dragée croissant lemon drops liquorice lemon drops cookie lollipop toffee. Carrot cake carrot cake liquorice sugar plum topping bonbon pie muffin jujubes. Jelly pastry wafer tart caramels bear claw. Tiramisu tart pie cake danish lemon drops. Brownie cupcake dragée gummies.";
 
             pies = new List<Pie> {
@@ -241,6 +242,52 @@ namespace OnlineShop.Data.Sql.Tests.Services
 
             // Assert
             Assert.Null(result);
+        }
+
+        [Theory]
+        [InlineData("Fruit pies")]
+        [InlineData("FRUIT PIES")]
+        [InlineData("fruit pies")]
+        [InlineData("Cheese cakes")]
+        [InlineData("CHEESE CAKES")]
+        [InlineData("cheese cakes")]
+        [InlineData("Seasonal pies")]
+        [InlineData("SEASONAL PIES")]
+        [InlineData("seasonal pies")]
+        public async Task GetPiesByCategoryAsync_WhenCalledWithValidCategoryIgnoringCase_ReturnsAllPiesOfGivenCategoryWithCategory(string category)
+        {
+            // Arrange
+            var sut = new PieService(dbContext);
+
+            // Act
+            var result = await sut.GetPiesByCategoryAsync(category);
+
+            // Assert
+            Assert.Equal(pies.Count(p => p.Category.Name.Equals(category, StringComparison.InvariantCultureIgnoreCase)), result.Count());
+            Assert.NotNull(result.First().Category);
+            Assert.NotNull(result.Last().Category);
+        }
+
+        [Theory]
+        [InlineData("Fruit pie")]
+        [InlineData("FRUIT  PIES")]
+        [InlineData("fruits pies")]
+        [InlineData("Cheese cake")]
+        [InlineData("CHEESE  CAKES")]
+        [InlineData("cheesee cakes")]
+        [InlineData("Seasonal pie")]
+        [InlineData("SEASONAL  PIES")]
+        [InlineData("seasonall pies")]
+        public async Task GetPiesByCategoryAsync_WhenCalledWithInvalidCategoryIgnoringCase_ReturnsNull(string category)
+        {
+            // Arrange
+            var sut = new PieService(dbContext);
+
+            // Act
+            var result = await sut.GetPiesByCategoryAsync(category);
+
+            // Assert
+            Assert.Empty(result);
         }
     }
 }
