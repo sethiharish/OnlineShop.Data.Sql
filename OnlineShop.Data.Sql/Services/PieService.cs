@@ -29,8 +29,7 @@ namespace OnlineShop.Data.Sql.Services
 
         public async Task<IEnumerable<Pie>> GetPiesByCategoryAsync(string category)
         {
-            return await context.Pie.Where(p => 
-                                        p.Category.Name.Equals(category, StringComparison.InvariantCultureIgnoreCase))
+            return await context.Pie.Where(p => p.Category.NormalizedName == category.Trim().ToUpper())
                                     .Include(p => p.Category).ToListAsync();
         }
 

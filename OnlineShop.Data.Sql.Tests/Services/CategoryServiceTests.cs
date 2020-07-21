@@ -14,9 +14,9 @@ namespace OnlineShop.Data.Sql.Tests.Services
         public CategoryServiceTests()
         {
             // Arrange
-            var categoryFruitPies = new Category { Id = 1, Name = "Fruit pies", Description = "Fruit pies" };
-            var categoryCheeseCakes = new Category { Id = 2, Name = "Cheese cakes", Description = "Cheese cakes" };
-            var categorySeasonalPies = new Category { Id = 3, Name = "Seasonal pies", Description = "Seasonal pies" };
+            var categoryFruitPies = new Category { Id = 1, Name = "Fruit pies", NormalizedName = "FRUIT PIES", Description = "Fruit pies" };
+            var categoryCheeseCakes = new Category { Id = 2, Name = "Cheese cakes", NormalizedName = "CHEESE CAKES", Description = "Cheese cakes" };
+            var categorySeasonalPies = new Category { Id = 3, Name = "Seasonal pies", NormalizedName = "SEASONAL PIES", Description = "Seasonal pies" };
             categories = new List<Category> { categoryFruitPies, categoryCheeseCakes, categorySeasonalPies };
             
             dbContext.Category.AddRange(categories);

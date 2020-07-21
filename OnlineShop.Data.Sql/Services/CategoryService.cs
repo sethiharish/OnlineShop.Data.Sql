@@ -28,8 +28,7 @@ namespace OnlineShop.Data.Sql.Services
 
         public async Task<Category> GetCategoryByNameAsync(string category)
         {
-            return await context.Category.FirstOrDefaultAsync(c => 
-                                            c.Name.Equals(category, StringComparison.InvariantCultureIgnoreCase));
+            return await context.Category.FirstOrDefaultAsync(c => c.NormalizedName == category.Trim().ToUpper());
         }
     }
 }
